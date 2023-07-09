@@ -13,8 +13,9 @@ const htmlPath = path.join(__dirname, 'vite-react-giggle', 'dist', 'index.html')
 const assetsPath = path.join(__dirname, 'vite-react-giggle', 'dist');
 const port = 3000
 app.use(express.static(assetsPath));
+console.log("HTML PATH: ", htmlPath);
+console.log("ASSETS PATH: ", assetsPath);
 app.get('/', (req, res) => {
-    console.log(req);
     res.sendFile(htmlPath);
     res.end();
 });
