@@ -9,23 +9,58 @@ const app = express()
 const path = require('path');
 // express automatically search inside the view folder to use ejs
 
-const htmlPath = path.join(__dirname, 'vite-react-giggle', 'dist', 'index.html');
-const assetsPath = path.join(__dirname, 'vite-react-giggle', 'dist');
-const port = 3000
-// app.use(express.static(assetsPath));
-console.log("HTML - PATH: ", htmlPath);
-console.log("ASSETS - PATH: ", assetsPath);
+const prereactAssetsPath = path.join(__dirname, 'vite-react-giggle', 'dist');
+const astroAssetsPath = path.join(__dirname, 'terrestrial-tower', 'dist');
+const sveltAssetsPath = path.join(__dirname, 'svelt-giggle-app', 'dist');
+const vueAssetsPath = path.join(__dirname, 'vue-giggle-project', 'dist');
+const htmlPath = (basePath) => path.join(basePath, 'index.html');
 
-app.get('/', (req, res) => {
-    res.json({ hola: 'Hola esto es unaprueba', htmlPath, assetsPath })
-    res.end()
+const port = process.env.PORT || 5001;
+
+app.use((req, res, next) => {
+    next()
 })
-app.use(express.static(assetsPath));
-app.get('/app', (req, res) => {
-    res.sendFile(htmlPath);
-    res.end();
+
+app.use('/', express.static(path.join(__dirname, 'views')));
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'index.html'));
 });
 
+app.use((req, res, next) => {
+    console.log(req.url, '--BBB--')
+    next();
+})
+app.use('/app', express.static(path.join(__dirname, 'giggle-app')));
+app.get('/app', (req, res) => {
+    res.sendFile(path.join(__dirname, 'giggle-app', 'index.html'));
+});
+
+app.use((req, res, next) => {
+    console.log(req.url, '--CCC--')
+    next();
+})
+
+app.use(express.static(prereactAssetsPath));
+app.get('/vite-preact', (req, res) => {
+    res.sendFile(htmlPath(prereactAssetsPath));
+});
+
+app.use(express.static(sveltAssetsPath));
+app.get('/vite-svelte', (req, res) => {
+    res.sendFile(htmlPath(sveltAssetsPath));
+});
+
+app.use(express.static(astroAssetsPath));
+app.get('/vite-astro', (req, res) => {
+    res.sendFile(htmlPath(astroAssetsPath));
+});
+
+app.use(express.static(vueAssetsPath));
+app.get('/vite-vue', (req, res) => {
+    res.sendFile(htmlPath(vueAssetsPath));
+});
+
+app.use((req, res) => res.end('<h1>not found</h1>'));
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
