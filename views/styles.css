@@ -1,8 +1,31 @@
 body {
-    background-color: rgb(200, 200, 200);
+    background-color: #333;
+    font-family: Roboto;
+    padding: 5%;
+}
+
+h1 {
+    color: #eee
 }
 
 ul {
-    color: #6545c7;
+    color: white;
     font-size: large;
+    gap: 6px;
+    display: grid;
+    grid-template-rows: repeat(5, 1fr);
+    grid-template-columns: 2px 1fr;
+    height: 50vh;
+
+    & li {
+        grid-column-start: 2;
+        border-radius: 5px;
+        justify-self: stretch;
+    }
+}
+
+a {
+    cursor: pointer;
+    text-decoration: inherit;
+    color: inherit;
 }

@@ -15,7 +15,7 @@ const sveltAssetsPath = path.join(__dirname, 'svelt-giggle-app', 'dist');
 const vueAssetsPath = path.join(__dirname, 'vue-giggle-project', 'dist');
 const htmlPath = (basePath) => path.join(basePath, 'index.html');
 
-const port = process.env.PORT || 5001;
+const port = process.env.PORT || 3000;
 
 app.use((req, res, next) => {
     next()
@@ -27,7 +27,6 @@ app.get('/', (req, res) => {
 });
 
 app.use((req, res, next) => {
-    console.log(req.url, '--BBB--')
     next();
 })
 app.use('/app', express.static(path.join(__dirname, 'giggle-app')));
@@ -36,7 +35,6 @@ app.get('/app', (req, res) => {
 });
 
 app.use((req, res, next) => {
-    console.log(req.url, '--CCC--')
     next();
 })
 
